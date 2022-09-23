@@ -1,0 +1,157 @@
+What is Database?
+What is Database Management System?
+Different types of database.
+Relational Database Model
+  *** Relation/Table
+  *** Columns/Fields/Attributes
+  *** Cardinality of a relation
+  *** Degree of a relation
+Candidate Key
+Primary Key
+Alternate Key
+Integrities:-
+ *** Entity Integrity
+ *** Domain Integrity
+ *** Referential Integrity
+---------------------------------------------------------------------------------------------------------------------------
+Constraints:-
+*** Primary Key
+*** not null
+*** unique 
+*** check
+*** Foreign key
+----------------------------------------------------------------------------------------------------------------------------
+Table level constraint
+Column level constraint
+----------------------------------------------------------------------------------------------------------------------------
+Composite constraint===> are always applied on table level.
+------------------------------------------------------------------------------------------------------------------------
+Primary key cannot contain null value/values.
+Primary key will have unique values.
+We can have one primary key per table.
+
+Unique column/key can contain null value/values.
+Unique column will have unique values.
+We can have multiple unique columns per table.
+-------------------------------------------------------------------------------------------------------------------------
+DATA TYPES:-
+NUMERIC
+CHARACTER
+DATE and TIME
+BLOB
+CLOB
+----------------------------------------------------------------------------------------------------------------------------
+DDL
+DML
+TCL
+DCL
+DQL 
+--------------------------------------------------------------------------------------------------------------------------------
+The below two are part of DDL statements:
+CREATE TABLE
+TRUNCATE
+
+THE below are part of DML statements:
+INSERT 
+UPDATE
+DELETE
+SELECT (DQL)
+-----------------------------------------------------------------------------------------------------
+Functions:-
+Character
+Numeric
+Date and Time
+Conversions
+NVL
+user
+----------------------------------------------------------------------------------------------------------------------------
+DUAL is a system table which can be used to store the data which is not associated with a table.
+
+SELECT 2+2 FROM dual;     -- We wont be able to write SELECT 2+2; We have to address some table for any kind of display.
+
+SELECT sysdate FROM dual;
+--------------------------------------------------------------------------------------------------------------------------------
+Aggregate Function======> aggregate functions will work with  a  set of data at a time and will return a single value.
+max,min,sum,avg,count
+
+non-aggregate/scalar Function====non aggregate functions will work on a single data at a time and will return a single value.
+lower,upper,round,floor,ceil,to_char,to_date,to_number
+---------------------------------------------------------------------------------------------------------------------
+GROUP BY
+   HAVING (To give or apply condition after grouping )
+
+With having we use aggregate functions.
+
+So in a single SQL statement, we can have both where and group by clause.
+--------------------------------------------------------------------------------------------------------------------
+In order to sort the data , we use sort by <columnname>. By default sorting is ascending order sort. 
+--------------------------------------------------------------------------------------------------------------------------
+Joins:-
+Cross Join
+Inner Join
+
+We have two styles
+
+  ANSI STYLE
+     SELECT t1.column1,t1.column2,t2.column3,t2.column4
+     FROM table1 t1 INNER JOIN table t2
+     ON t1.column1=t2.column2  -- for join condition or predicate we make use of ON
+     WHERE t1.column1>value1   -- for restriction/filteration we use where
+     AND/OR t1.column2=value2
+     
+
+  THETA STYLE
+
+     SELECT t1.column1,t1.column2,t2.column3,t2.column4
+     FROM table1 t1,table t2
+     WHERE t1.column1=t2.column2  -- for join condition or predicate we make use of ON
+     AND t1.column1>value1        --with and to join predicate we are writing the restriction/filternation 
+     AND/OR t1.column2=value2
+
+----------------------------------------------------------------------------------------------------------------------------------
+ANSI STYLE
+     SELECT t1.column1,t1.column2,t2.column3,t2.column4
+     FROM table1 t1 INNER JOIN table t2
+     ON t1.column1=t2.column2  -- for join condition or predicate we make use of ON
+     INNER JOIN table3 t3
+     ON t1.column2=t3.column1  
+     INNER JOIN table t4
+     ON t2.column4=t4.column1
+--------------------------------------------------------------------------------------------------------------------
+We have a table where we have employee and their managers details
+
+  ID      NAME     BASIC   MGR_ID
+  1       Ram      20000   null
+  2       Suresh   15000   1
+  3       Nita     12000   2
+  4       Nidhi    16000   1
+
+ CREATE TABLE employeemanager(
+   id INTEGER CONSTRAINT empmgr_id_pk PRIMARY KEY,
+   name VARCHAR2(20) NOT NULL,
+   basic INTEGER NOT NULL,
+   mgr_id INTEGER CONSTRAINT empmgr_mgr_id_fk REFERENCES employeemanager(id)
+  );
+
+ INSERT INTO employeemanager VALUES(1,'Ram',20000,null);
+ INSERT INTO employeemanager VALUES(2,'Ram',20000,3); -- This insert will show error because currently we dont have any 
+ -- employee with id as 3
+  INSERT INTO employeemanager VALUES(2,'Suresh',15000,1);
+  INSERT INTO employeemanager VALUES(3,'Nita',12000,2);
+  INSERT INTO employeemanager VALUES(4,'Nidhi',16000,1);
+
+Display employee id ,name , manager's id , manager's name.
+
+  SELECT emp.id,emp.name,mgr.id,mgr.name
+  FROM employeemanager emp INNER JOIN employeemanager mgr
+  ON emp.mgr_id=mgr.id
+
+
+  SELECT employeemanager.id,employeemanager.name,mgr.id,mgr.name
+  FROM employeemanager INNER JOIN employeemanager mgr
+  ON employeemanager.mgr_id=mgr.id
+
+-----------------------------------------------------------------------------------------------------------------------------------
+    
+
+
